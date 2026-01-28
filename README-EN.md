@@ -62,7 +62,7 @@ graph LR
 ### Step 1: Start Server
 
 ```bash
-node .agent/skills/automated-instrumented-debugging/debug-server.js
+node .agent/skills/automated-instrumented-debugging/bootstrap.js
 ```
 
 ### Step 2: Instrumentation Template

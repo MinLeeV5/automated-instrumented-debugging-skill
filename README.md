@@ -62,7 +62,7 @@ graph LR
 ### 第一步：启动服务器
 
 ```bash
-node .agent/skills/automated-instrumented-debugging/debug-server.js
+node .agent/skills/automated-instrumented-debugging/bootstrap.js
 ```
 
 ### 第二步：插桩模板
