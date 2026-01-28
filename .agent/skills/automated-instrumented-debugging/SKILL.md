@@ -27,7 +27,7 @@ Follow this 4-phase loop to resolve issues efficiently.
 
 Don't rush to code. First, define what you need to capture.
 
-1. **Start Server**: Ensure `debug-server.js` is running (`node .agent/skills/automated-instrumented-debugging/debug-server.js`).
+1. **Start Server**: Ensure `bootstrap.js` is running (`node .agent/skills/automated-instrumented-debugging/bootstrap.js`).
 2. **Hypothesize**: What variable or flow is likely broken?
 3. **Plan Probes**: Decide where to place `#region DEBUG` blocks (Entry, Exit, Error, State).
 
@@ -77,7 +77,7 @@ fetch('http://localhost:9876/log', {
     session: '{SESSION}',
     type: 'enter',
     fn: '{FUNC}',
-    file: '{FILE}',
+    file: '{FILE_PATH}', // Use absolute path or relative to project root
     data: { arg1, arg2 }, // Snapshot arguments
   }),
 }).catch(() => {});
@@ -95,7 +95,8 @@ fetch('http://localhost:9876/log', {
     session: '{SESSION}',
     type: 'var',
     fn: '{FUNC}',
-    data: { varName, computedValue },
+    file: '{FILE_PATH}',
+    data: { varName: value },
   }),
 }).catch(() => {});
 // #endregion
@@ -137,14 +138,8 @@ fetch('http://localhost:9876/log', {
 
 ## Anti-Patterns
 
-❌ **Blind Instrumentation**: Spraying `console.log` or probes everywhere without a plan.
--> _Fix_: Plan your specific questions first ("Does X equal Y?").
+❌ **Sync Fetch Trap**: Using `fetch` without considering execution order in critical paths.
+-> _Fix_: Always use `.catch(() => {})` and place probes _after_ variable definitions.
 
-❌ **Ignoring Context**: Logging "Error happened" without variables `id` or `state`.
--> _Fix_: Always include relevant `data` in the JSON body.
-
-❌ **Dirty Leaves**: Committing `#region DEBUG` code.
--> _Fix_: Always verify cleanup before final submission.
-
-❌ **Zombie Server**: Leaving the debug server running indefinitely without purpose.
--> _Fix_: Use the explicit shutdown API when done.
+❌ **Committing Probes**: Forgetting to run `cleanup.js`.
+-> _Fix_: Add `cleanup` as a mandatory step in your "Resolution & Cleanup" workflow.

@@ -27,7 +27,7 @@ allowed-tools: replace_file_content, run_command, read_url_content
 
 不要急于编码。首先，定义你需要捕捉的内容。
 
-1. **启动服务器**：确保 `debug-server.js` 正在运行（`node .agent/skills/automated-instrumented-debugging/debug-server.js`）。
+1. **启动服务器**：确保 `bootstrap.js` 正在运行（`node .agent/skills/automated-instrumented-debugging/bootstrap.js`）。
 2. **提出假设**：哪个变量或流程可能出了问题？
 3. **规划探针**：决定在何处放置 `#region DEBUG` 块（进入、退出、错误、状态）。
 
@@ -77,7 +77,7 @@ fetch('http://localhost:9876/log', {
     session: '{SESSION}',
     type: 'enter',
     fn: '{FUNC}',
-    file: '{FILE}',
+    file: '{FILE_PATH}', // 使用绝对路径或相对于项目根目录的路径
     data: { arg1, arg2 }, // 快照参数
   }),
 }).catch(() => {});
@@ -95,7 +95,8 @@ fetch('http://localhost:9876/log', {
     session: '{SESSION}',
     type: 'var',
     fn: '{FUNC}',
-    data: { varName, computedValue },
+    file: '{FILE_PATH}',
+    data: { varName: value },
   }),
 }).catch(() => {});
 // #endregion
@@ -137,14 +138,8 @@ fetch('http://localhost:9876/log', {
 
 ## 反模式
 
-❌ **盲目插桩**：在没有计划的情况下，到处撒 `console.log` 或探针。
--> _修正_：先规划具体问题（“X 是否等于 Y？”）。
+❌ **同步 Fetch 陷阱**：在关键路径中使用 `fetch` 时未考虑执行顺序或未捕获异常。
+-> _修正_：务必使用 `.catch(() => {})` 并在变量定义*之后*放置探针。
 
-❌ **忽略上下文**：只记录“发生了错误”，而不记录变量 `id` 或 `state`。
--> _修正_：务必在 JSON 正文中包含相关的 `data`。
-
-❌ **残留代码**：提交包含 `#region DEBUG` 的代码。
--> _修正_：在最终提交前务必验证清理结果。
-
-❌ **遗留服务器**：在没有目标的情况下，让调试服务器无限期运行。
--> _修正_：完成后使用显式关闭 API。
+❌ **残留探针**：忘记运行 `cleanup.js`。
+-> _修正_：将 `cleanup` 作为“解决与清理”工作流中的强制步骤。
