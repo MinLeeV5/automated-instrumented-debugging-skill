@@ -1,5 +1,7 @@
 # Automated Instrumented Debugging - Installation Guide
 
+GitHub: [https://github.com/MinLeeV5/automated-instrumented-debugging-skill](https://github.com/MinLeeV5/automated-instrumented-debugging-skill)
+
 ## Quick Start
 
 ### 1. Automatic Installation (Recommended)
@@ -7,8 +9,7 @@
 You can use the [vercel-labs/skills](https://github.com/vercel-labs/skills) utility to install this skill globally for your preferred AI agent:
 
 ```bash
-# Example (if this project is published or via local path)
-npx @vercel/skills add automated-instrumented-debugging
+npx @vercel/skills add MinLeeV5/automated-instrumented-debugging-skill
 ```
 
 ### 2. Manual Installation (Global)
@@ -16,8 +17,8 @@ npx @vercel/skills add automated-instrumented-debugging
 Copy the skill contents to the specialized directory for your agent:
 
 - **Antigravity**: `~/.gemini/antigravity/skills/`
-- **OpenCode**: `~/.config/opencode/skills/`
 - **Claude Code**: `~/.claude/skills/`
+- **OpenCode**: `~/.config/opencode/skills/`
 
 ### 3. Project-Level Use (Native Support)
 
@@ -36,7 +37,8 @@ automated-instrumented-debugging/
 │   ├── skills/
 │   │   └── automated-instrumented-debugging/
 │   │       ├── SKILL.md         # Skill definitions
-│   │       └── debug-server.js  # Implementation logic
+│   │       ├── debug-server.js  # Implementation logic
+│   │       └── cleanup.js       # Cleanup utility
 │   └── workflows/
 │       └── automated-debug.md   # Step-by-step guides
 ├── examples/                    # Usage demonstrations
@@ -50,17 +52,17 @@ automated-instrumented-debugging/
 ls -R .agent
 
 # Test the debug server
-node .agent/skills/automated-instrumented-debugging/debug-server.js
-# Should show: Debug Log Server v1.0.0 running at http://localhost:9876
+node .agent/skills/automated-instrumented-debugging/bootstrap.js
+# Should show: Debug Log Server running at http://localhost:9876
 ```
 
 ## Usage
 
 ### Workflow Summary
 
-1. **Start server**: `node .agent/skills/automated-instrumented-debugging/debug-server.js`
+1. **Start server**: `node .agent/skills/automated-instrumented-debugging/bootstrap.js`
 2. **AI inserts fetch calls** with `#region DEBUG` wrappers
 3. **Run code** to trigger the bug
 4. **Query logs**: `curl http://localhost:9876/logs/{session}`
-5. **Revert code**: `git checkout src/`
+5. **Revert code**: `node .agent/skills/automated-instrumented-debugging/cleanup.js`
 6. **Stop server**: `curl -X DELETE http://localhost:9876/shutdown`

@@ -7,44 +7,75 @@
 
 An **Automated Instrumented Debugging System** designed specifically for AI Agents (e.g., Antigravity, Claude Code, OpenCode). It transforms traditional "logging" into a **systematic evidence collection stream**.
 
-[中文版](./README.md)
+[中文版](./README.md) | [GitHub Repository](https://github.com/MinLeeV5/automated-instrumented-debugging-skill)
 
-## 1. How It Works
+---
+
+## 1. Installation
+
+You can integrate this skill into your development workflow in several ways:
+
+### 1.1 Automatic Installation (Recommended)
+
+One-click installation via the `vercel-labs/skills` utility:
+
+```bash
+npx @vercel/skills add MinLeeV5/automated-instrumented-debugging-skill
+```
+
+### 1.2 Manual Integration (Global)
+
+Copy the skill contents to your AI agent's specialized skill directory:
+
+- **Antigravity**: `~/.gemini/antigravity/skills/`
+- **Claude Code**: `~/.claude/skills/`
+
+### 1.3 Project-Level Usage
+
+If your current project already contains the `.agent/` directory, agents like Antigravity will **automatically detect** and load it:
+
+- **Skill Path**: `.agent/skills/automated-instrumented-debugging/`
+- **Workflow Path**: `.agent/workflows/automated-debug.md`
+
+> [!NOTE]
+> For more details, please refer to the [Detailed Installation Guide](./INSTALL.md).
+
+---
+
+## 2. How It Works
 
 Core Philosophy: **AI Instruments, System Aggregates, Developer Analyzes.**
 
-### 1.1 System Architecture
+### 2.1 System Architecture
 
 Decouples and streams internal program states to a centralized debug server via lightweight HTTP.
 
 ```mermaid
 graph TD
-    subgraph "AIAgent (Antigravity/Claude)"
-        A1["Strategy"] --> A2["Auto-Instrumentation"]
-        A3["Evidence Retrieval"] --> A4["Analysis"]
-    end
+    NodeA["Strategy"] --> NodeB["Auto-Instrumentation"]
+    NodeC["Evidence Retrieval"] --> NodeD["Analysis"]
 
     subgraph "Target Environment"
-        T1["Target Code"] -- "POST /log (fetch)" --> S1
+        NodeE["Target Code"] -- "POST /log (fetch)" --> NodeF
     end
 
     subgraph "Debug Infrastructure"
-        S1["Debug Server (Port: 9876)"] -- "JSON Store" --> S2[("Trace Logs")]
+        NodeF["Debug Server (Port: 9876)"] -- "JSON Store" --> NodeG["Trace Logs"]
     end
 
-    A2 --> T1
-    S1 --> A3
+    NodeB --> NodeE
+    NodeF --> NodeC
 ```
 
-### 1.2 Core Workflow
+### 2.2 Core Workflow
 
 Employs a **4-Phase Systematic Debugging Methodology** to ensure a complete chain of evidence:
 
 ```mermaid
 graph LR
-    P1["Strategy & Setup"] --> P2["Instrumentation"]
-    P2 --> P3["Evidence & Analysis"]
-    P3 --> P4["Fix & Cleanup"]
+    P1["Strategy #quot; Setup"] --> P2["Instrumentation"]
+    P2 --> P3["Evidence #quot; Analysis"]
+    P3 --> P4["Fix #quot; Cleanup"]
 ```
 
 1.  **Strategy & Setup**: AI identifies potential fault points and starts the `debug-server`.
@@ -54,7 +85,7 @@ graph LR
 
 ---
 
-## 2. Quick Start (AI Guide)
+## 3. Quick Start (AI Guide)
 
 > [!TIP]
 > These steps are primarily for AI Agent reference. Human developers only need to know the commands.
@@ -93,25 +124,22 @@ node .agent/skills/automated-instrumented-debugging/cleanup.js
 
 ---
 
-## 3. Project Structure
+## 4. Project Structure
 
 Follows the **Standard Agentic Skill** specification:
 
 ```text
 .agent/
-└── skills/
-    └── automated-instrumented-debugging/
-        ├── SKILL.md         # AI Skill Instructions (Core)
-        ├── debug-server.js  # Pure JS Log Server (Zero-dependency)
-        └── cleanup.js       # Safe Instrumentation Cleanup Tool
-workflows/
-└── automated-debug.md       # Standardized Debug Workflow Definition
+├── skills/
+│   └── automated-instrumented-debugging/
+│       ├── SKILL.md         # AI Skill Instructions (Core)
+│       ├── SKILL-CN.md      # Chinese Instructions
+│       ├── debug-server.js  # Pure JS Log Server (Zero-dependency)
+│       ├── bootstrap.js     # Server Bootstrap
+│       └── cleanup.js       # Safe Instrumentation Cleanup Tool
+└── workflows/
+    └── automated-debug.md   # Standardized Debug Workflow Definition
 ```
-
-## 4. Resources
-
-- [Detailed Installation Guide](./INSTALL.md)
-- [Chinese Version](./README.md)
 
 ---
 

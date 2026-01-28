@@ -7,44 +7,75 @@
 
 这是一个专为 AI Agent（如 Antigravity, Claude Code, OpenCode）设计的**自动化插桩调试系统**。它将传统的“打印日志”升级为一种**系统化的证据搜集流**。
 
-[English Version](./README-EN.md)
+[English Version](./README-EN.md) | [GitHub 仓库](https://github.com/MinLeeV5/automated-instrumented-debugging-skill)
 
-## 1. 技术原理
+---
+
+## 1. 安装 (Installation)
+
+你可以通过以下几种方式将此技能集成到你的开发流程中：
+
+### 1.1 自动安装 (推荐)
+
+通过 `vercel-labs/skills` 工具一键安装：
+
+```bash
+npx @vercel/skills add MinLeeV5/automated-instrumented-debugging-skill
+```
+
+### 1.2 手动集成 (全局)
+
+将技能内容复制到 Agent 的专用技能目录：
+
+- **Antigravity**: `~/.gemini/antigravity/skills/`
+- **Claude Code**: `~/.claude/skills/`
+
+### 1.3 项目级使用
+
+如果当前项目已包含 `.agent/` 目录，Antigravity 等 Agent 会**自动识别**并加载：
+
+- **技能路径**: `.agent/skills/automated-instrumented-debugging/`
+- **工作流路径**: `.agent/workflows/automated-debug.md`
+
+> [!NOTE]
+> 更多细节请参考 [详细安装指南](./INSTALL.md)。
+
+---
+
+## 2. 技术原理
 
 本工具的核心理念是：**AI 负责插桩，系统负责聚合，开发者负责分析。**
 
-### 1.1 系统架构
+### 2.1 系统架构
 
 通过轻量级的 HTTP 协议，将受测程序的内部状态解耦并传输至中心化调试服务器。
 
 ```mermaid
 graph TD
-    subgraph "AIAgent"
-        A1["策略制定"] --> A2["自动化插桩"]
-        A3["证据检索"] --> A4["结果分析"]
-    end
+    NodeA["策略制定"] --> NodeB["自动化插桩"]
+    NodeC["证据检索"] --> NodeD["结果分析"]
 
     subgraph "Target Environment"
-        T1["Target Code"] -- "POST /log (fetch)" --> S1
+        NodeE["Target Code"] -- "POST /log (fetch)" --> NodeF
     end
 
     subgraph "Debug Infrastructure"
-        S1["Debug Server (Port: 9876)"] -- "JSON Store" --> S2[("Trace Logs")]
+        NodeF["Debug Server (Port: 9876)"] -- "JSON Store" --> NodeG["Trace Logs"]
     end
 
-    A2 --> T1
-    S1 --> A3
+    NodeB --> NodeE
+    NodeF --> NodeC
 ```
 
-### 1.2 核心工作流
+### 2.2 核心工作流
 
 采用 **4 阶段系统化调试法**，确保证据链的完整性：
 
 ```mermaid
 graph LR
-    P1["策略 & 设置"] --> P2["自动化插桩"]
-    P2 --> P3["证据搜集 & 分析"]
-    P3 --> P4["修复 & 清理"]
+    P1["策略 #quot; 设置"] --> P2["自动化插桩"]
+    P2 --> P3["证据搜集 #quot; 分析"]
+    P3 --> P4["修复 #quot; 清理"]
 ```
 
 1.  **策略 & 设置**: AI 识别潜在故障点，启动 `debug-server`。
@@ -54,7 +85,7 @@ graph LR
 
 ---
 
-## 2. 快速开始 (AI Guide)
+## 3. 快速开始 (AI Guide)
 
 > [!TIP]
 > 这里的步骤主要供 AI Agent 参考，人类开发者只需了解命令即可。
@@ -93,25 +124,22 @@ node .agent/skills/automated-instrumented-debugging/cleanup.js
 
 ---
 
-## 3. 项目结构
+## 4. 项目结构
 
 项目遵循 **Standard Agentic Skill** 规范：
 
 ```text
 .agent/
-└── skills/
-    └── automated-instrumented-debugging/
-        ├── SKILL.md         # AI 技能指令集 (核心)
-        ├── debug-server.js  # 纯 JS 日志服务器 (零依赖)
-        └── cleanup.js       # 安全插桩清理工具
-workflows/
-└── automated-debug.md       # 标准化调试流程定义
+├── skills/
+│   └── automated-instrumented-debugging/
+│       ├── SKILL.md         # AI 技能指令集 (核心)
+│       ├── SKILL-CN.md      # 中文指令集
+│       ├── debug-server.js  # 纯 JS 日志服务器 (零依赖)
+│       ├── bootstrap.js     # 服务器启动引导
+│       └── cleanup.js       # 安全插桩清理工具
+└── workflows/
+    └── automated-debug.md   # 标准化调试流程定义
 ```
-
-## 4. 更多资源
-
-- [详细安装指南](./INSTALL.md)
-- [英文文档](./README-EN.md)
 
 ---
 
