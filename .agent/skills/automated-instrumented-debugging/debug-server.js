@@ -16,6 +16,7 @@
 const http = require('http');
 const os = require('os');
 const { randomBytes } = require('crypto');
+const { exec } = require('child_process');
 
 const PORT = parseInt(process.env.DEBUG_PORT || '9876');
 const IDLE_TIMEOUT = parseInt(process.env.DEBUG_IDLE_TIMEOUT || (10 * 60 * 1000).toString()); // Default 10 mins
@@ -197,11 +198,28 @@ async function handleRequest(req, res) {
 
 const server = http.createServer(handleRequest);
 
-server.listen(PORT, '0.0.0.0', () => {
-  const networkIP = getNetworkAddress();
-  console.log(`
+function checkPort(port) {
+  return new Promise((resolve) => {
+    const server = http.createServer();
+    server.on('error', () => resolve(false));
+    server.listen(port, () => {
+      server.close(() => resolve(true));
+    });
+  });
+}
+
+(async () => {
+  const available = await checkPort(PORT);
+  if (!available) {
+    console.error(`\n[ERROR] Port ${PORT} is already in use. Please stop the existing process or use DEBUG_PORT to specify a different port.\n`);
+    process.exit(1);
+  }
+
+  server.listen(PORT, '0.0.0.0', () => {
+    const networkIP = getNetworkAddress();
+    console.log(`
 ╔═══════════════════════════════════════════════════════════════════╗
-║                      Debug Log Server v1.0.0                      ║
+║                      Debug Log Server v1.1.0                      ║
 ╠═══════════════════════════════════════════════════════════════════╣
 ║  Local:    http://localhost:${PORT}                                 ║
 ║  Network:  http://${networkIP}:${PORT}                                   ║
@@ -211,11 +229,13 @@ server.listen(PORT, '0.0.0.0', () => {
 ║    GET  /sessions         List all sessions                       ║
 ║    GET  /logs/:session    Query logs (?fn=&type=&limit=)          ║
 ║    DELETE /logs/:session  Clear session logs                      ║
+║    DELETE /shutdown       Shutdown server                         ║
 ╠═══════════════════════════════════════════════════════════════════╣
-║  Press Ctrl+C to stop                                             ║
+║  Status:   RUNNING (Auto-shutdown after ${Math.round(IDLE_TIMEOUT / 60000)}m idle)       ║
 ╚═══════════════════════════════════════════════════════════════════╝
 `);
-});
+  });
+})();
 
 process.on('SIGINT', () => {
   console.log('\n\nShutting down Debug Log Server...');
