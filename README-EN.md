@@ -20,7 +20,7 @@ You can integrate this skill into your development workflow in several ways:
 One-click installation via the `vercel-labs/skills` utility:
 
 ```bash
-npx @vercel/skills add MinLeeV5/automated-instrumented-debugging-skill
+npx skills add MinLeeV5/automated-instrumented-debugging-skill
 ```
 
 ### 1.2 Manual Integration (Global)

@@ -20,7 +20,7 @@
 通过 `vercel-labs/skills` 工具一键安装：
 
 ```bash
-npx @vercel/skills add MinLeeV5/automated-instrumented-debugging-skill
+npx skills add MinLeeV5/automated-instrumented-debugging-skill
 ```
 
 ### 1.2 手动集成 (全局)

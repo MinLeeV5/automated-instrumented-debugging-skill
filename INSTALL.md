@@ -9,7 +9,7 @@ GitHub: [https://github.com/MinLeeV5/automated-instrumented-debugging-skill](htt
 You can use the [vercel-labs/skills](https://github.com/vercel-labs/skills) utility to install this skill globally for your preferred AI agent:
 
 ```bash
-npx @vercel/skills add MinLeeV5/automated-instrumented-debugging-skill
+npx skills add MinLeeV5/automated-instrumented-debugging-skill
 ```
 
 ### 2. Manual Installation (Global)
