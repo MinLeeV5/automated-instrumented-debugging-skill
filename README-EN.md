@@ -93,7 +93,7 @@ graph LR
 ### Step 1: Start Server
 
 ```bash
-node .agent/skills/automated-instrumented-debugging/bootstrap.js
+node .agent/skills/automated-instrumented-debugging/scripts/bootstrap.js
 ```
 
 ### Step 2: Instrumentation Template
@@ -119,7 +119,7 @@ curl http://localhost:9876/logs/session_4b2a
 ### Step 4: One-Click Cleanup
 
 ```bash
-node .agent/skills/automated-instrumented-debugging/cleanup.js
+node .agent/skills/automated-instrumented-debugging/scripts/cleanup.js
 ```
 
 ---
@@ -134,9 +134,10 @@ Follows the **Standard Agentic Skill** specification:
 │   └── automated-instrumented-debugging/
 │       ├── SKILL.md         # AI Skill Instructions (Core)
 │       ├── SKILL-CN.md      # Chinese Instructions
-│       ├── debug-server.js  # Pure JS Log Server (Zero-dependency)
-│       ├── bootstrap.js     # Server Bootstrap
-│       └── cleanup.js       # Safe Instrumentation Cleanup Tool
+│       └── scripts/         # Core Scripts
+│           ├── debug-server.js  # Pure JS Log Server (Zero-dependency)
+│           ├── bootstrap.js     # Server Bootstrap
+│           └── cleanup.js       # Safe Instrumentation Cleanup Tool
 └── workflows/
     └── automated-debug.md   # Standardized Debug Workflow Definition
 ```

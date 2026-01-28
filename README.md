@@ -93,7 +93,7 @@ graph LR
 ### 第一步：启动服务器
 
 ```bash
-node .agent/skills/automated-instrumented-debugging/bootstrap.js
+node .agent/skills/automated-instrumented-debugging/scripts/bootstrap.js
 ```
 
 ### 第二步：插桩模板
@@ -119,7 +119,7 @@ curl http://localhost:9876/logs/session_4b2a
 ### 第四步：一键清理
 
 ```bash
-node .agent/skills/automated-instrumented-debugging/cleanup.js
+node .agent/skills/automated-instrumented-debugging/scripts/cleanup.js
 ```
 
 ---
@@ -134,9 +134,10 @@ node .agent/skills/automated-instrumented-debugging/cleanup.js
 │   └── automated-instrumented-debugging/
 │       ├── SKILL.md         # AI 技能指令集 (核心)
 │       ├── SKILL-CN.md      # 中文指令集
-│       ├── debug-server.js  # 纯 JS 日志服务器 (零依赖)
-│       ├── bootstrap.js     # 服务器启动引导
-│       └── cleanup.js       # 安全插桩清理工具
+│       └── scripts/         # 核心脚本目录
+│           ├── debug-server.js  # 纯 JS 日志服务器 (零依赖)
+│           ├── bootstrap.js     # 服务器启动引导
+│           └── cleanup.js       # 安全插桩清理工具
 └── workflows/
     └── automated-debug.md   # 标准化调试流程定义
 ```

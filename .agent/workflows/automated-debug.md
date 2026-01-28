@@ -20,7 +20,7 @@ $ARGUMENTS
 
 ### 1. 准备与假设 (Strategy)
 
-- **启动服务器**: (// turbo) `node .agent/skills/automated-instrumented-debugging/debug-server.js`
+- **启动服务器**: (// turbo) `node .agent/skills/automated-instrumented-debugging/scripts/debug-server.js`
 - **分析症状**: 理解用户报告的 Bug。
 - **提出假设**: 列出 1-3 个最可能的根本原因。
 - **制定计划**: 决定在何处插入探针 (`fetch`) 以验证假设。
@@ -44,8 +44,8 @@ $ARGUMENTS
 - **根本原因**: 基于证据确定 Root Cause。
 - **实施修复**: 修改代码并验证。
 - **清理环境**:
-  - 移除插桩: `git checkout src/` (或手动移除 `#region DEBUG` 块)
-  - 关闭服务器: `curl -X DELETE http://localhost:9876/shutdown`
+  - **移除插桩**: `node .agent/skills/automated-instrumented-debugging/scripts/cleanup.js`
+  - **关闭服务器**: `curl -X DELETE http://localhost:9876/shutdown`
 
 ---
 

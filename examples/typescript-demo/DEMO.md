@@ -13,7 +13,7 @@
 自动化插桩系统依赖一个本地日志服务器来聚合数据。
 
 ```bash
-node ../../.agent/skills/automated-instrumented-debugging/debug-server.js
+node ../../.agent/skills/automated-instrumented-debugging/scripts/debug-server.js
 ```
 
 ### 2. 插桩演示
@@ -46,5 +46,5 @@ chmod +x run-demo.sh
 调试完成后，可以使用以下命令移除所有调试代码：
 
 ```bash
-node ../../.agent/skills/automated-instrumented-debugging/cleanup.js
+node ../../.agent/skills/automated-instrumented-debugging/scripts/cleanup.js
 ```

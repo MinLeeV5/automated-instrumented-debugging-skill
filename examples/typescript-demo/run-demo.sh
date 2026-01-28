@@ -4,7 +4,7 @@ echo "=== Automated Instrumented Debugging Demo ==="
 echo ""
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-SERVER_SCRIPT="$SCRIPT_DIR/../../.agent/skills/automated-instrumented-debugging/debug-server.js"
+SERVER_SCRIPT="$SCRIPT_DIR/../../.agent/skills/automated-instrumented-debugging/scripts/debug-server.js"
 
 echo "Step 1: Starting debug server..."
 node "$SERVER_SCRIPT" &

@@ -27,7 +27,7 @@ allowed-tools: replace_file_content, run_command, read_url_content
 
 不要急于编码。首先，定义你需要捕捉的内容。
 
-1. **启动服务器**：确保 `bootstrap.js` 正在运行（`node .agent/skills/automated-instrumented-debugging/bootstrap.js`）。
+1. **启动服务器**：确保 `bootstrap.js` 正在运行（`node .agent/skills/automated-instrumented-debugging/scripts/bootstrap.js`）。
 2. **提出假设**：哪个变量或流程可能出了问题？
 3. **规划探针**：决定在何处放置 `#region DEBUG` 块（进入、退出、错误、状态）。
 
@@ -60,7 +60,7 @@ _（参见下文的“插桩模板”以获取代码模式）_
 2. **验证**：运行测试以确认修复方案。
 3. **清理**：**至关重要！** 使用清理脚本移除所有 `#region DEBUG` 块：
    ```bash
-   node .agent/skills/automated-instrumented-debugging/cleanup.js
+   node .agent/skills/automated-instrumented-debugging/scripts/cleanup.js
    ```
 4. **关闭**：如果不再需要，停止调试服务器。
 

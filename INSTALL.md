@@ -37,8 +37,10 @@ automated-instrumented-debugging/
 │   ├── skills/
 │   │   └── automated-instrumented-debugging/
 │   │       ├── SKILL.md         # Skill definitions
-│   │       ├── debug-server.js  # Implementation logic
-│   │       └── cleanup.js       # Cleanup utility
+│   │       └── scripts/         # Implementation logic
+│   │           ├── debug-server.js
+│   │           ├── bootstrap.js
+│   │           └── cleanup.js
 │   └── workflows/
 │       └── automated-debug.md   # Step-by-step guides
 ├── examples/                    # Usage demonstrations
@@ -52,7 +54,7 @@ automated-instrumented-debugging/
 ls -R .agent
 
 # Test the debug server
-node .agent/skills/automated-instrumented-debugging/bootstrap.js
+node .agent/skills/automated-instrumented-debugging/scripts/bootstrap.js
 # Should show: Debug Log Server running at http://localhost:9876
 ```
 
@@ -60,9 +62,9 @@ node .agent/skills/automated-instrumented-debugging/bootstrap.js
 
 ### Workflow Summary
 
-1. **Start server**: `node .agent/skills/automated-instrumented-debugging/bootstrap.js`
+1. **Start server**: `node .agent/skills/automated-instrumented-debugging/scripts/bootstrap.js`
 2. **AI inserts fetch calls** with `#region DEBUG` wrappers
 3. **Run code** to trigger the bug
 4. **Query logs**: `curl http://localhost:9876/logs/{session}`
-5. **Revert code**: `node .agent/skills/automated-instrumented-debugging/cleanup.js`
+5. **Revert code**: `node .agent/skills/automated-instrumented-debugging/scripts/cleanup.js`
 6. **Stop server**: `curl -X DELETE http://localhost:9876/shutdown`

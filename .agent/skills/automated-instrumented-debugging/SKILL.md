@@ -27,7 +27,7 @@ Follow this 4-phase loop to resolve issues efficiently.
 
 Don't rush to code. First, define what you need to capture.
 
-1. **Start Server**: Ensure `bootstrap.js` is running (`node .agent/skills/automated-instrumented-debugging/bootstrap.js`).
+1. **Start Server**: Ensure `bootstrap.js` is running (`node .agent/skills/automated-instrumented-debugging/scripts/bootstrap.js`).
 2. **Hypothesize**: What variable or flow is likely broken?
 3. **Plan Probes**: Decide where to place `#region DEBUG` blocks (Entry, Exit, Error, State).
 
@@ -60,7 +60,7 @@ Fix the root cause and restore the codebase.
 2. **Verify**: Run tests to confirm the fix.
 3. **Cleanup**: **Crucial!** Remove all `#region DEBUG` blocks using the cleanup script:
    ```bash
-   node .agent/skills/automated-instrumented-debugging/cleanup.js
+   node .agent/skills/automated-instrumented-debugging/scripts/cleanup.js
    ```
 4. **Shutdown**: Stop the debug server if no longer needed.
 
