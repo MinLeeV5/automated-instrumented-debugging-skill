@@ -11,7 +11,18 @@ const DEBUG_REGION_START = /\/\/ #region DEBUG/i;
 const DEBUG_REGION_PATTERN = /\/\/\s*#region\s+DEBUG[\s\S]*?\/\/\s*#endregion[\s\r\n]*/gi;
 
 // Configurable exclusion list
-const EXCLUDE_DIRS = new Set(['node_modules', '.git', '.agent', 'dist', 'build', '.next', 'out']);
+const EXCLUDE_DIRS = new Set([
+  'node_modules',
+  '.git',
+  '.agent',
+  '.agents',
+  '.claude',
+  '.codex',
+  'dist',
+  'build',
+  '.next',
+  'out'
+]);
 const SUPPORTED_EXTS = new Set(['.ts', '.js', '.tsx', '.jsx', '.py', '.go', '.java', '.c', '.cpp', '.h', '.cs', '.mjs', '.cjs']);
 
 function cleanupFile(filePath) {

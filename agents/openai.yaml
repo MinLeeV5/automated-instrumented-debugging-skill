@@ -1,0 +1,4 @@
+interface:
+  display_name: "Automated Instrumented Debugging"
+  short_description: "Evidence-first instrumentation debugging"
+  default_prompt: "Use $automated-instrumented-debugging to instrument the suspect execution path, collect evidence, identify the root cause, and clean up the probes."

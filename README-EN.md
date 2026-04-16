@@ -1,11 +1,10 @@
 # Automated Instrumented Debugging
 
-[![Antigravity](https://img.shields.io/badge/Agent-Antigravity-blue)](https://github.com/google-deepmind/antigravity)
 [![Claude Code](https://img.shields.io/badge/Agent-Claude_Code-8555e3)](https://claude.ai/)
-[![OpenCode](https://img.shields.io/badge/Agent-OpenCode-black)](https://opencode.com/)
+[![Codex](https://img.shields.io/badge/Agent-Codex-0A0A0A)](https://openai.com/codex/)
 [![Platform](https://img.shields.io/badge/Platform-Node.js-green)](https://nodejs.org/)
 
-An **Automated Instrumented Debugging System** designed specifically for AI Agents (e.g., Antigravity, Claude Code, OpenCode). It transforms traditional "logging" into a **systematic evidence collection stream**.
+An **Automated Instrumented Debugging** skill package tailored for **Claude Code** and **Codex**. It turns ad-hoc logging into a **systematic evidence collection loop**: the agent instruments, the local server aggregates, and the developer analyzes.
 
 [中文版](./README.md) | [GitHub Repository](https://github.com/MinLeeV5/automated-instrumented-debugging-skill)
 
@@ -13,7 +12,7 @@ An **Automated Instrumented Debugging System** designed specifically for AI Agen
 
 ## 1. Installation
 
-You can integrate this skill into your development workflow in several ways:
+This repository now exposes a single Skill only. Workflows are intentionally removed for better cross-agent compatibility.
 
 ### 1.1 Automatic Installation (Recommended)
 
@@ -25,17 +24,10 @@ npx skills add MinLeeV5/automated-instrumented-debugging-skill
 
 ### 1.2 Manual Integration (Global)
 
-Copy the skill contents to your AI agent's specialized skill directory:
+Copy or clone the repository root into one of these destinations:
 
-- **Antigravity**: `~/.gemini/antigravity/skills/`
-- **Claude Code**: `~/.claude/skills/`
-
-### 1.3 Project-Level Usage
-
-If your current project already contains the `.agent/` directory, agents like Antigravity will **automatically detect** and load it:
-
-- **Skill Path**: `.agent/skills/automated-instrumented-debugging/`
-- **Workflow Path**: `.agent/workflows/automated-debug.md`
+- **Claude Code**: `~/.claude/skills/automated-instrumented-debugging`
+- **Codex**: `~/.codex/skills/automated-instrumented-debugging`
 
 > [!NOTE]
 > For more details, please refer to the [Detailed Installation Guide](./INSTALL.md).
@@ -93,7 +85,7 @@ graph LR
 ### Step 1: Start Server
 
 ```bash
-node .agent/skills/automated-instrumented-debugging/scripts/bootstrap.js
+node scripts/bootstrap.js
 ```
 
 ### Step 2: Instrumentation Template
@@ -119,29 +111,28 @@ curl http://localhost:9876/logs/session_4b2a
 ### Step 4: One-Click Cleanup
 
 ```bash
-node .agent/skills/automated-instrumented-debugging/scripts/cleanup.js
+node scripts/cleanup.js
 ```
 
 ---
 
 ## 4. Project Structure
 
-Follows the **Standard Agentic Skill** specification:
+The repository root itself is the skill:
 
 ```text
-.agent/
-├── skills/
-│   └── automated-instrumented-debugging/
-│       ├── SKILL.md         # AI Skill Instructions (Core)
-│       ├── SKILL-CN.md      # Chinese Instructions
-│       └── scripts/         # Core Scripts
-│           ├── debug-server.js  # Pure JS Log Server (Zero-dependency)
-│           ├── bootstrap.js     # Server Bootstrap
-│           └── cleanup.js       # Safe Instrumentation Cleanup Tool
-└── workflows/
-    └── automated-debug.md   # Standardized Debug Workflow Definition
+.
+├── SKILL.md               # Skill instructions
+├── agents/
+│   └── openai.yaml        # Codex UI metadata
+├── scripts/
+│   ├── debug-server.js    # Zero-dependency log server
+│   ├── bootstrap.js       # Server bootstrap
+│   └── cleanup.js         # Probe cleanup tool
+└── examples/
+    └── typescript-demo/
 ```
 
 ---
 
-Powered by Antigravity.
+Compatible with Claude Code and Codex.

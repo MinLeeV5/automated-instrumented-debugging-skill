@@ -14,47 +14,36 @@ npx skills add MinLeeV5/automated-instrumented-debugging-skill
 
 ### 2. Manual Installation (Global)
 
-Copy the skill contents to the specialized directory for your agent:
+Copy or clone the repository root into one of these destinations:
 
-- **Antigravity**: `~/.gemini/antigravity/skills/`
-- **Claude Code**: `~/.claude/skills/`
-- **OpenCode**: `~/.config/opencode/skills/`
-
-### 3. Project-Level Use (Native Support)
-
-This project is already configured with a `.agent/` directory. Antigravity and compatible agents will **automatically detect** all skills and workflows when you open this workspace.
-
-- **Skills**: `.agent/skills/automated-instrumented-debugging/`
-- **Workflows**: `.agent/workflows/automated-debug.md`
+- **Claude Code**: `~/.claude/skills/automated-instrumented-debugging`
+- **Codex**: `~/.codex/skills/automated-instrumented-debugging`
 
 ## File Structure (Current Project)
 
-The project follows the standard Agentic structure:
+The project now exposes one skill only:
 
 ```text
-automated-instrumented-debugging/
-├── .agent/
-│   ├── skills/
-│   │   └── automated-instrumented-debugging/
-│   │       ├── SKILL.md         # Skill definitions
-│   │       └── scripts/         # Implementation logic
-│   │           ├── debug-server.js
-│   │           ├── bootstrap.js
-│   │           └── cleanup.js
-│   └── workflows/
-│       └── automated-debug.md   # Step-by-step guides
-├── examples/                    # Usage demonstrations
-└── INSTALL.md                   # You are here
+.
+├── SKILL.md
+├── agents/
+│   └── openai.yaml
+├── scripts/
+│   ├── debug-server.js
+│   ├── bootstrap.js
+│   └── cleanup.js
+└── examples/
+    └── typescript-demo/
 ```
 
 ## Verify Installation
 
 ```bash
 # Check files exist in the project
-ls -R .agent
+ls -R .
 
 # Test the debug server
-node .agent/skills/automated-instrumented-debugging/scripts/bootstrap.js
+node scripts/bootstrap.js
 # Should show: Debug Log Server running at http://localhost:9876
 ```
 
@@ -62,9 +51,9 @@ node .agent/skills/automated-instrumented-debugging/scripts/bootstrap.js
 
 ### Workflow Summary
 
-1. **Start server**: `node .agent/skills/automated-instrumented-debugging/scripts/bootstrap.js`
+1. **Start server**: `node scripts/bootstrap.js`
 2. **AI inserts fetch calls** with `#region DEBUG` wrappers
 3. **Run code** to trigger the bug
 4. **Query logs**: `curl http://localhost:9876/logs/{session}`
-5. **Revert code**: `node .agent/skills/automated-instrumented-debugging/scripts/cleanup.js`
+5. **Revert code**: `node scripts/cleanup.js`
 6. **Stop server**: `curl -X DELETE http://localhost:9876/shutdown`

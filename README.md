@@ -1,11 +1,10 @@
 # 自动化插桩调试 (Automated Instrumented Debugging)
 
-[![Antigravity](https://img.shields.io/badge/Agent-Antigravity-blue)](https://github.com/google-deepmind/antigravity)
 [![Claude Code](https://img.shields.io/badge/Agent-Claude_Code-8555e3)](https://claude.ai/)
-[![OpenCode](https://img.shields.io/badge/Agent-OpenCode-black)](https://opencode.com/)
+[![Codex](https://img.shields.io/badge/Agent-Codex-0A0A0A)](https://openai.com/codex/)
 [![Platform](https://img.shields.io/badge/Platform-Node.js-green)](https://nodejs.org/)
 
-这是一个专为 AI Agent（如 Antigravity, Claude Code, OpenCode）设计的**自动化插桩调试系统**。它将传统的“打印日志”升级为一种**系统化的证据搜集流**。
+这是一个面向 **Claude Code** 和 **Codex** 的单 Skill 版本自动化插桩调试系统。它将传统“打印日志”升级为一种**系统化的证据搜集流**：AI 负责临时插桩，调试服务器负责聚合证据，开发者负责分析与修复。
 
 [English Version](./README-EN.md) | [GitHub 仓库](https://github.com/MinLeeV5/automated-instrumented-debugging-skill)
 
@@ -13,7 +12,7 @@
 
 ## 1. 安装 (Installation)
 
-你可以通过以下几种方式将此技能集成到你的开发流程中：
+现在仓库只暴露一个 Skill，不再包含 workflows，便于在 Claude Code 与 Codex 之间复用。
 
 ### 1.1 自动安装 (推荐)
 
@@ -25,17 +24,10 @@ npx skills add MinLeeV5/automated-instrumented-debugging-skill
 
 ### 1.2 手动集成 (全局)
 
-将技能内容复制到 Agent 的专用技能目录：
+将整个仓库根目录复制或克隆到以下目标之一：
 
-- **Antigravity**: `~/.gemini/antigravity/skills/`
-- **Claude Code**: `~/.claude/skills/`
-
-### 1.3 项目级使用
-
-如果当前项目已包含 `.agent/` 目录，Antigravity 等 Agent 会**自动识别**并加载：
-
-- **技能路径**: `.agent/skills/automated-instrumented-debugging/`
-- **工作流路径**: `.agent/workflows/automated-debug.md`
+- **Claude Code**: `~/.claude/skills/automated-instrumented-debugging`
+- **Codex**: `~/.codex/skills/automated-instrumented-debugging`
 
 > [!NOTE]
 > 更多细节请参考 [详细安装指南](./INSTALL.md)。
@@ -93,7 +85,7 @@ graph LR
 ### 第一步：启动服务器
 
 ```bash
-node .agent/skills/automated-instrumented-debugging/scripts/bootstrap.js
+node scripts/bootstrap.js
 ```
 
 ### 第二步：插桩模板
@@ -119,29 +111,28 @@ curl http://localhost:9876/logs/session_4b2a
 ### 第四步：一键清理
 
 ```bash
-node .agent/skills/automated-instrumented-debugging/scripts/cleanup.js
+node scripts/cleanup.js
 ```
 
 ---
 
 ## 4. 项目结构
 
-项目遵循 **Standard Agentic Skill** 规范：
+项目根目录本身就是 Skill：
 
 ```text
-.agent/
-├── skills/
-│   └── automated-instrumented-debugging/
-│       ├── SKILL.md         # AI 技能指令集 (核心)
-│       ├── SKILL-CN.md      # 中文指令集
-│       └── scripts/         # 核心脚本目录
-│           ├── debug-server.js  # 纯 JS 日志服务器 (零依赖)
-│           ├── bootstrap.js     # 服务器启动引导
-│           └── cleanup.js       # 安全插桩清理工具
-└── workflows/
-    └── automated-debug.md   # 标准化调试流程定义
+.
+├── SKILL.md               # Skill 指令
+├── agents/
+│   └── openai.yaml        # Codex UI 元数据
+├── scripts/
+│   ├── debug-server.js    # 零依赖日志服务器
+│   ├── bootstrap.js       # 服务启动引导
+│   └── cleanup.js         # 插桩清理工具
+└── examples/
+    └── typescript-demo/
 ```
 
 ---
 
-由 Antigravity 强力驱动。
+兼容 Claude Code 与 Codex。
